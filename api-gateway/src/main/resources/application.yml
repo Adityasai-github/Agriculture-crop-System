@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    gateway:
+       routes:
+       - id: farmerModule
+         uri: http://localhost:8081/
+         predicates:
+         - Path=/farmer/**
+       - id: traderModule
+         uri: http://localhost:8082/
+         predicates:
+         - Path=/trader/**
+  application:
+    name: API-GATEWAY
