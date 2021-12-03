@@ -12,4 +12,6 @@ public interface  CropRepo extends MongoRepository<Crop, String> {
 	  
 	@Query("{'croptype' : ?0}") List<Crop> findCropByType(String croptype);
 
+	@Query("{'cropid' : ?0}")List<Crop> CropById(String cropid);
+
 }

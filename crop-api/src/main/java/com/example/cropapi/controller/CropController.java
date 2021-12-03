@@ -8,33 +8,44 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cropapi.Repo.CropRepo;
 
 import com.example.cropapi.model.Crop;
+import com.example.cropapi.model.GetAllCrops;
 
 	@RestController
+    @RequestMapping("/crops")
 	public class CropController {
 	 
 		@Autowired
 		CropRepo repos;
+		@Autowired
+		GetAllCrops getAllCrops;
 		
 		
-		@PostMapping("/crop")
+		@PostMapping("/addcrops")
 		public void placeCrop(@RequestBody Crop crop) {
 			repos.insert(crop);
 		}
 		 @GetMapping("/all")
-		   public List<Crop> showAllCrops(){
-			   return repos.findAll();
+		   public GetAllCrops showAllCrops(){
+			   getAllCrops.setCropList(repos.findAll());
+			   return getAllCrops;
 			   }
-		 @GetMapping("/crop/{cropname}")
+		 @GetMapping("/crops/{cropname}")
 		  public List<Crop> findCrop ( @PathVariable String cropname) {
 			  return repos.findCropByName(cropname);
 		  }
+		 @GetMapping("/crop/{cropid}")
+		 public List<Crop> findCropId (@PathVariable  String cropid){
+			return repos.CropById(cropid);
+			 
+		 }
 		 
-		 @GetMapping("/crops/{croptype}")
+		 @GetMapping("/croptype/{croptype}")
 		  public List<Crop> findCropType ( @PathVariable String croptype) {
 			  return repos.findCropByType(croptype);
 		  }
