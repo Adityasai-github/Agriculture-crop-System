@@ -2,13 +2,18 @@ spring:
   cloud:
     gateway:
        routes:
-       - id: farmerModule
-         uri: http://localhost:8081/
+       - id: farmer-service
+         uri: lb://farmer-service
          predicates:
          - Path=/farmer/**
-       - id: traderModule
-         uri: http://localhost:8082/
+       - id: trader-service
+         uri: lb//trader-service
          predicates:
          - Path=/trader/**
-  application:
-    name: API-GATEWAY
+       - id: crop-api
+         uri: lb://crop-api
+         predicates:
+         - Path=/crops/**
+         
+    application:
+        name: API-GATEWAY

@@ -1,4 +1,4 @@
-package com.example.farmerservice;
+package com.example.traderservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,16 +13,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableEurekaClient
 @EnableSwagger2
 
-public class FarmerServiceApplication {
-
-	@Bean
+public class DealerServiceApplication {
 	
+	@Bean
+	@LoadBalanced
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();
 	}
-
 	public static void main(String[] args) {
-		SpringApplication.run(FarmerServiceApplication.class, args);
+		SpringApplication.run(DealerServiceApplication.class, args);
 	}
 
 }

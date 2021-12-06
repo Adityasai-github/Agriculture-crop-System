@@ -1,8 +1,7 @@
-package com.example.cropapi.model;
+package com.example.farmerservice.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Document
 public class Crop {
