@@ -14,6 +14,7 @@ spring:
          uri: lb://crop-api
          predicates:
          - Path=/crops/**
+        
          
     application:
         name: API-GATEWAY

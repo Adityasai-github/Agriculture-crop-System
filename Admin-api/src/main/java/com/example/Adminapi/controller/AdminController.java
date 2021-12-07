@@ -20,12 +20,12 @@ public class AdminController {
 	
 	@PostMapping("/adddealer")
 	public void placeDealer(@RequestBody Dealer dealer) {
-		restTemplate.postForEntity("http://localhost:80823/trader/dealers", dealer, Dealer.class);
+		restTemplate.postForEntity("http://trader-service/trader/dealers", dealer, Dealer.class);
 	}
 	
 	@GetMapping("/viewalldealers")
 	public String showAllDealers() {
-		return restTemplate.getForObject("http://localhost:8083/trader/alldealers", String.class);
+		return restTemplate.getForObject("http://trader-service/trader/alldealers", String.class);
 	}
 	
 	@GetMapping("/viewallfarmers")

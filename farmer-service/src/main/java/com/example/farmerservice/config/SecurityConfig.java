@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.csrf().disable().authorizeRequests().antMatchers("/farmer/addfarmers", "/farmer/auth").permitAll()
+		http.csrf().disable().authorizeRequests().antMatchers("/farmer/addfarmers","/farmer/addcrop","/admin","/farmer/allfarmers","/trader/viewallfarmers","/farmer/buycrop/{id}","/farmer/deletefarmer/{id}","/farmer/rating/{ID}","/farmer/update/{id}", "/farmer/auth").permitAll()
 				.anyRequest().authenticated().and().formLogin();
 }
 	

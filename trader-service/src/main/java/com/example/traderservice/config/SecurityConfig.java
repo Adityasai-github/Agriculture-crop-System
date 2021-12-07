@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.csrf().disable().authorizeRequests().antMatchers("/trader/adddealers", "/trader/auth").permitAll()
+		http.csrf().disable().authorizeRequests().antMatchers("/trader/adddealers","/farmer/viewalldealers","/trader/alldealers","/trader/giverating/{ID}","/trader/update/{dealername}","/trader/buycrop/{id}","/trader/delete/{dealername}", "/trader/auth").permitAll()
 				.anyRequest().authenticated().and().formLogin();
 }
 

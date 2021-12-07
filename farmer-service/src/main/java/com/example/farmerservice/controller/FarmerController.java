@@ -1,9 +1,12 @@
 package com.example.farmerservice.controller;
 
+import com.example.farmerservice.exception.ApiException;
 import com.example.farmerservice.model.*;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.farmerservice.repo.FarmerRepo;
+import com.example.farmerservice.service.FarmerService;
 @RestController
 @RequestMapping("/farmer")
 public class FarmerController {
@@ -63,9 +67,9 @@ public class FarmerController {
 	       
 	
 	  @PutMapping("/rating/{ID}") 
-	  public void giveRating(@RequestBody Farmer farmer, @PathVariable int ID)
+	  public void giveRating(@RequestBody Farmer farmer, @PathVariable String ID)
 	  { 
-		  farmer.setFid( ID );
+		  farmer.setID( ID );
 		  Integer rating=farmer.getAllRatings().stream().mapToInt(Integer::intValue).sum()/farmer. getAllRatings().size(); farmer.setRating(rating); 
 	  repo.save(farmer);
 	  }
@@ -75,19 +79,24 @@ public class FarmerController {
 	 public Farmer findfarmer ( @PathVariable String fname) {
 		  return repo.findFarmerByName(fname);
 	  }
-	@PutMapping("/update/{id}")
-	 public String updateFarmerId(@RequestBody Farmer farmer, @PathVariable int id) {
-	      farmer.setFid( id );
+	@PutMapping("/update/{ID}")
+	 public String updateFarmerId(@RequestBody Farmer farmer, @PathVariable String ID) {
+	      farmer.setID( ID );
 	      repo.save(farmer);
 	      return ("Updated farmer id  Successfully");
 	  }
 	 
-	 @DeleteMapping("/deletefarmer/{id}")
-	 public String deleteFarmer( @PathVariable String id )	{
-			repo.deleteById( id );
-			return ("Deleted the farmer by id Successfully");
+	 @DeleteMapping("/deletefarmer/{ID}")
+	 public ResponseEntity<Object> deleteFarmer( @PathVariable String ID )	{
+			boolean isFarmerExist = repo.existsById(ID);
+			if (isFarmerExist) {
+				FarmerService.deleteById(ID);
+			
+			return new ResponseEntity<Object>("farmer deleted with id" + ID, HttpStatus.OK);
+			} else {
+				throw new ApiException("CAN NOT DELETE FARMER ,AS FARMER NOT FOUND WITH THIS ID ::");
+			}
 		}
-	
 	 
 	 
 }

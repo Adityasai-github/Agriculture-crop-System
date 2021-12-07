@@ -29,6 +29,12 @@ public Farmer(String ID,int fid, String fname, String fpassword, String faccno, 
 	this.allRatings=allRatings;
 	this.rating=rating;
 }
+
+public Farmer() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
 public String getID() {
 	return ID;
 }
