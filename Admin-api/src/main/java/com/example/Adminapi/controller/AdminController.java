@@ -30,7 +30,7 @@ public class AdminController {
 	
 	@GetMapping("/viewallfarmers")
     public String showAllFarmers() {
-  	  return restTemplate.getForObject("http://localhost:8081/farmer/allfarmers", String.class);
+  	  return restTemplate.getForObject("http://farmer-service/farmer/allfarmers", String.class);
     }
 	
 	

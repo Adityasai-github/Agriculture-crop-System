@@ -7,6 +7,12 @@ import org.springframework.stereotype.Service;
 public class GetAllCrops {
 List<Crop> cropList=new ArrayList<Crop>();
 
+
+public GetAllCrops() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
 public List<Crop> getCropList() {
 	return cropList;
 }

@@ -14,6 +14,11 @@ private String cropaddress;
 private String croptype;
 private String cropmincost;
 
+
+public Crop() {
+	super();
+	// TODO Auto-generated constructor stub
+}
 public Crop(String cropname, String cropid, String cropquantity, String cropaddress, String croptype,
 		String cropmincost) {
 	super();

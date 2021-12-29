@@ -7,6 +7,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.farmerservice.repo.FarmerRepo;
-import com.example.farmerservice.service.FarmerService;
+//import com.example.farmerservice.service.FarmerService;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/farmer")
 public class FarmerController {
@@ -27,6 +31,14 @@ public class FarmerController {
 	FarmerRepo repo;
 	@Autowired
 	RestTemplate restTemplate;
+	@Autowired
+	GetAllFarmers getAllFarmers;
+	/*
+	 * @Autowired AuthenticationManager authenticationManager
+	 */;
+	/*
+	 * @Autowired FarmerService farmerService;
+	 */
 	
 	
 	
@@ -35,6 +47,7 @@ public class FarmerController {
 	public void placefarmer(@RequestBody Farmer farmer) {
 		repo.insert(farmer);
 	}
+
 
 	
 	@PostMapping("/addcrop")
@@ -49,9 +62,9 @@ public class FarmerController {
 
 	}
 	
-	@GetMapping("/allmycrops/{id}")
-	public String showFarmerCrops(@PathVariable("id") String id) {
-		return restTemplate.getForObject("http://crop-api/crops/crop/" +id, String.class);
+	@GetMapping("/allmycrops/{cropid}")
+	public String showFarmerCrops(@PathVariable("cropid") String cropid) {
+		return restTemplate.getForObject("http://crop-api/crops/crop/" +cropid, String.class);
 	}
 	
 	@GetMapping("/viewalldealers")
@@ -60,8 +73,9 @@ public class FarmerController {
 	}
 	 
 	@GetMapping("/allfarmers")
-	public List<Farmer> showAllFarmers(){
-		   return repo.findAll();
+	public GetAllFarmers showAllFarmers() {
+		getAllFarmers.setFarmerList(repo.findAll());
+		   return getAllFarmers;
     }
 	
 	       
@@ -75,28 +89,41 @@ public class FarmerController {
 	  }
 	 
 
-	@GetMapping("/farmer/{fname}")
-	 public Farmer findfarmer ( @PathVariable String fname) {
-		  return repo.findFarmerByName(fname);
+	@GetMapping("/farmerbyid/{ID}")
+	 public Farmer findfarmer ( @PathVariable String ID) {
+		  return repo.findFarmerById(ID);
 	  }
-	@PutMapping("/update/{ID}")
+	@PutMapping("/updatefarmer/{ID}")
 	 public String updateFarmerId(@RequestBody Farmer farmer, @PathVariable String ID) {
 	      farmer.setID( ID );
 	      repo.save(farmer);
 	      return ("Updated farmer id  Successfully");
 	  }
 	 
-	 @DeleteMapping("/deletefarmer/{ID}")
-	 public ResponseEntity<Object> deleteFarmer( @PathVariable String ID )	{
+	 @GetMapping("/deletefarmer/{ID}")
+		 public void deleteFarmer(@PathVariable String ID) {
+		    repo.deleteById(ID);
+		     
+		 }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	/* public ResponseEntity<Object> deleteFarmer( @PathVariable String ID )	{
 			boolean isFarmerExist = repo.existsById(ID);
 			if (isFarmerExist) {
-				FarmerService.deleteById(ID);
+				farmerService.deleteById(ID);
 			
 			return new ResponseEntity<Object>("farmer deleted with id" + ID, HttpStatus.OK);
 			} else {
 				throw new ApiException("CAN NOT DELETE FARMER ,AS FARMER NOT FOUND WITH THIS ID ::");
 			}
-		}
+		}*/
 	 
 	 
+
 }

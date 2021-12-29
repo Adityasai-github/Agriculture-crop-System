@@ -7,18 +7,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Crop {
 @Id
 
-private String cropid;
+
 private String cropname;
 private String cropquantity;
 private String cropaddress;
 private String croptype;
 private String cropmincost;
 
-public Crop(String cropname, String cropid, String cropquantity, String cropaddress, String croptype,
+public Crop(String cropname,  String cropquantity, String cropaddress, String croptype,
 		String cropmincost) {
 	super();
 	this.cropname = cropname;
-	this.cropid = cropid;
 	this.cropquantity = cropquantity;
 	this.cropaddress = cropaddress;
 	this.croptype = croptype;
@@ -30,12 +29,7 @@ public String getCropname() {
 public void setCropname(String cropname) {
 	this.cropname = cropname;
 }
-public String getCropid() {
-	return cropid;
-}
-public void setCropid(String cropid) {
-	this.cropid = cropid;
-}
+
 public String getCropquantity() {
 	return cropquantity;
 }

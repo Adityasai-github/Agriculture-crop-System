@@ -1,5 +1,6 @@
 package com.example.traderservice.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,17 @@ GetAllCrops getAllCrops;
     	  return restTemplate.getForObject("http://farmer-service/farmer/allfarmers", String.class);
       }
       
+      @GetMapping("/subscribedcrop/{dealerid}")
+      public List<Crop> showSubscribedCrops(@PathVariable String dealerid){
+    	  Dealer dealer= repo1.findDealerById(dealerid);
+    	  GetAllCrops allCrops= restTemplate.getForObject("http://crop-api/crops/all", GetAllCrops.class );
+    	  List<Crop> cropList=new ArrayList<Crop>();
+    	  for (String dealername : dealer.getSubscribedcrop()) {
+  			cropList.addAll(allCrops.getCropList().stream().filter(l -> l.getCropname().equalsIgnoreCase(dealername)).toList());	
+  		}
+  		return  cropList;
+      }
+      
  
       @PutMapping("/update/{dealername}")
      public String updatedealername(@RequestBody Dealer dealer, @PathVariable String dealername) {
@@ -74,10 +86,10 @@ GetAllCrops getAllCrops;
  	      return ("Updated dealer name  Successfully");
  	  }
       
-      @PutMapping("/buycrop/{id}")
-      public String buycrop(@RequestBody Farmer Farmer, @PathVariable String id) {
+      @PutMapping("/buycrop/{,cropid}")
+      public String buycrop(@RequestBody Crop crop, @PathVariable String cropid) {
   	 
-  	restTemplate.put("http://crop-api/crops/buycrop/"+id, Farmer);
+  	restTemplate.put("http://crop-api/crops/buycrop/"+cropid, crop);
   	 
   	return "requested the respective crop by id  successfully";
       }

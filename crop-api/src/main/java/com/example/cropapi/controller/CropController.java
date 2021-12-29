@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,33 +20,34 @@ import com.example.cropapi.model.GetAllCrops;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
+    @CrossOrigin(origins = "http://localhost:3000")
 	@RestController
     @RequestMapping("/crops")
 	public class CropController {
-
-
-		private static final String CropService = "Crop-Service";
 		@Autowired
 		private CropService cropService;
 		
+		private static final String CropService = "Crop-Service";
+
 		@CircuitBreaker(name=CropService,fallbackMethod = "cropFallback")
 		
+		 @GetMapping("/all")
+		   public GetAllCrops showAllCrops(){
+			   return cropService.showAllCrops();
+		 }
 		
 		@PostMapping("/addcrops")
 		public void placeCrop(@RequestBody Crop crop) {
 			cropService.placeCrop(crop);
 		}
-		 @GetMapping("/all")
-		   public GetAllCrops showAllCrops(){
-			   return cropService.showAllCrops();
-		 }
+		
 		 
 		 
 		 @GetMapping("/crops/{cropname}")
 		  public List<Crop> findCrop ( @PathVariable String cropname) {
 			  return cropService.findCrop(cropname);
 		  }
-		 @GetMapping("/crop/{cropid}")
+		 @GetMapping("/cropbyid/{cropid}")
 		 public List<Crop> findCropId (@PathVariable  String cropid){
 			return cropService.findCropId(cropid);
 			 
@@ -58,30 +60,29 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 		 
 		 
 		 
-		 @PutMapping("/updatecrop/{id}")
-		  public String updateCrop(@RequestBody Crop crop, @PathVariable String id) {
-		      crop.setCropid( id );
-		      cropService.updateCrop(crop, id);
+		 @PutMapping("/updatecrop/{cropid}")
+		  public String updateCrop(@RequestBody Crop crop, @PathVariable String cropid) {
+		      cropService.updateCrop(crop, cropid);
 		      return ("Updated Successfully");
 		  }
 		 
-		 @PutMapping("/buycrop/{id}")
-		    public void buyCrop(@RequestBody Crop crop,@PathVariable("id") String id) {
-		        crop.setCropid( id );
+		 @PutMapping("/buycrop/{cropid}")
+		    public void buyCrop(@RequestBody Crop crop,@PathVariable("cropid") String cropid) {
+		        crop.setCropid( cropid );
 		        
-		        cropService.buyCrop(crop, id);
+		        cropService.buyCrop(crop, cropid);
 		      
 		  
 		    }
-			@DeleteMapping("/deletecrop/{id}")
-			public String deleteCrop( @PathVariable String id )	{
-				cropService.deleteCrop( id );
+			@GetMapping("/deletecrop/{cropid}")
+			public String deleteCrop( @PathVariable String cropid )	{
+				cropService.deleteCrop( cropid );
 				return ("Deleted Successfully");
 			}
-			
-			  public ResponseEntity<String> cropFallback(Exception e){
+			 public ResponseEntity<String> cropFallback(Exception e){
 				  return new ResponseEntity<String>("Crop service is very busy",HttpStatus.OK); 
 				  
 			  }
-			 
+
+
 	}

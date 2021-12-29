@@ -18,6 +18,10 @@ public class CropService {
 	@Autowired
 	GetAllCrops getAllCrops;
 	
+	
+	public CropService(CropRepo repos, GetAllCrops getAllCrops2) {
+		// TODO Auto-generated constructor stub
+	}
 	public void placeCrop(@RequestBody Crop crop) {
 		repos.insert(crop);
 	}
@@ -35,18 +39,18 @@ public class CropService {
 	 public List<Crop> findCropType ( @PathVariable String croptype) {
 		  return repos.findCropByType(croptype);
 	  }
-	 public String updateCrop(@RequestBody Crop crop, @PathVariable String id) {
-	      crop.setCropid( id );
+	 public void updateCrop(Crop crop,  String cropid) {
+	      crop.setCropid( cropid );
 	      repos.save(crop);
-	      return ("Updated Successfully");
+
 	  }
-	 public void buyCrop(@RequestBody Crop crop,@PathVariable("id") String id) {
-	        crop.setCropid( id );
+	 public void buyCrop(@RequestBody Crop crop,@PathVariable("cropid") String cropid) {
+	        crop.setCropid( cropid );
 	        
 	        repos.save(crop);
 	 }
-	 public String deleteCrop( @PathVariable String id )	{
-			repos.deleteById( id );
+	 public String deleteCrop( @PathVariable String cropid )	{
+			repos.deleteById( cropid );
 			return ("Deleted Successfully");
 		}
 	 

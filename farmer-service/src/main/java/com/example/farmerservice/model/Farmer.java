@@ -9,23 +9,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Farmer {
 @Id
 private String ID;
-private int fid;
-private String fname;
-private String fpassword;
-private String faccno;
-private String femail;
+private String farmername;
+private String farmerpassword;
+private String farmeraccno;
+private String farmeremail;
 private int rating;
 private List<Integer> allRatings;
 
 
-public Farmer(String ID,int fid, String fname, String fpassword, String faccno, String femail,int rating,List<Integer>allRatings ) {
+public Farmer(String ID, String farmername, String farmerpassword, String farmeraccno, String farmeremail,int rating,List<Integer>allRatings ) {
 	super();
 	this.ID=ID;
-	this.fid = fid;
-	this.fname = fname;
-	this.fpassword = fpassword;
-	this.faccno = faccno;
-	this.femail = femail;
+	this.farmername = farmername;
+	this.farmerpassword = farmerpassword;
+	this.farmeraccno = farmeraccno;
+	this.farmeremail = farmeremail;
 	this.allRatings=allRatings;
 	this.rating=rating;
 }
@@ -38,38 +36,29 @@ public Farmer() {
 public String getID() {
 	return ID;
 }
-public void setID(String iD) {
-	ID = iD;
-}
-public int getFid() {
-	return fid;
-}
-public void setFid(int fid) {
-	this.fid = fid;
-}
 public String getFname() {
-	return fname;
+	return farmername;
 }
 public void setFname(String fname) {
-	this.fname = fname;
+	this.farmername = fname;
 }
 public String getFpassword() {
-	return fpassword;
+	return farmerpassword;
 }
 public void setFpassword(String fpassword) {
-	this.fpassword = fpassword;
+	this.farmerpassword = fpassword;
 }
 public String getFaccno() {
-	return faccno;
+	return farmeraccno;
 }
 public void setFaccno(String faccno) {
-	this.faccno = faccno;
+	this.farmeraccno = faccno;
 }
 public String getFemail() {
-	return femail;
+	return farmeremail;
 }
 public void setFemail(String femail) {
-	this.femail = femail;
+	this.farmeremail = femail;
 }
 public List<Integer> getAllRatings() {
 	return allRatings;
@@ -82,6 +71,12 @@ public int getRating() {
 }
 public void setRating(int rating) {
 	this.rating = rating;
-}	
+}
+
+public void setID(String iD) {
+	this.ID=iD;
+	
+}
+
 
 }

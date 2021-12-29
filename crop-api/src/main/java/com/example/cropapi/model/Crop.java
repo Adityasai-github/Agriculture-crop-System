@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Document
 public class Crop {
 @Id
-
 private String cropid;
 private String cropname;
 private String cropquantity;
 private String cropaddress;
 private String croptype;
 private String cropmincost;
+
+
 
 public Crop(String cropname, String cropid, String cropquantity, String cropaddress, String croptype,
 		String cropmincost) {
@@ -24,6 +25,9 @@ public Crop(String cropname, String cropid, String cropquantity, String cropaddr
 	this.cropaddress = cropaddress;
 	this.croptype = croptype;
 	this.cropmincost = cropmincost;
+}
+public Crop() {
+	// TODO Auto-generated constructor stub
 }
 public String getCropname() {
 	return cropname;
