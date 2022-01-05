@@ -1,27 +1,35 @@
 package com.example.farmerservice.model;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Crop {
 @Id
-
-
+private String cropid;
 private String cropname;
 private String cropquantity;
 private String cropaddress;
+private Binary cropImg;
 private String croptype;
 private String cropmincost;
 
-public Crop(String cropname,  String cropquantity, String cropaddress, String croptype,
+
+
+
+public Crop(String cropname, String cropid, String cropquantity, String cropaddress, String croptype,Binary cropImg,
 		String cropmincost) {
 	super();
 	this.cropname = cropname;
+	this.cropid = cropid;
 	this.cropquantity = cropquantity;
 	this.cropaddress = cropaddress;
 	this.croptype = croptype;
 	this.cropmincost = cropmincost;
+	this.cropImg=cropImg;
+}
+public Crop() {
 }
 public String getCropname() {
 	return cropname;
@@ -29,7 +37,12 @@ public String getCropname() {
 public void setCropname(String cropname) {
 	this.cropname = cropname;
 }
-
+public String getCropid() {
+	return cropid;
+}
+public void setCropid(String cropid) {
+	this.cropid = cropid;
+}
 public String getCropquantity() {
 	return cropquantity;
 }
@@ -53,6 +66,12 @@ public String getCropmincost() {
 }
 public void setCropmincost(String cropmincost) {
 	this.cropmincost = cropmincost;
+}
+public Binary getCropImg() {
+	return cropImg;
+}
+public void setCropImg(Binary cropImg) {
+	this.cropImg = cropImg;
 }
 
 

@@ -1,5 +1,6 @@
 package com.example.cropapi.model;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,12 +12,14 @@ private String cropid;
 private String cropname;
 private String cropquantity;
 private String cropaddress;
+private Binary cropImg;
 private String croptype;
 private String cropmincost;
 
 
 
-public Crop(String cropname, String cropid, String cropquantity, String cropaddress, String croptype,
+
+public Crop(String cropname, String cropid, String cropquantity, String cropaddress, String croptype,Binary cropImg,
 		String cropmincost) {
 	super();
 	this.cropname = cropname;
@@ -25,9 +28,9 @@ public Crop(String cropname, String cropid, String cropquantity, String cropaddr
 	this.cropaddress = cropaddress;
 	this.croptype = croptype;
 	this.cropmincost = cropmincost;
+	this.cropImg=cropImg;
 }
 public Crop() {
-	// TODO Auto-generated constructor stub
 }
 public String getCropname() {
 	return cropname;
@@ -64,6 +67,12 @@ public String getCropmincost() {
 }
 public void setCropmincost(String cropmincost) {
 	this.cropmincost = cropmincost;
+}
+public Binary getCropImg() {
+	return cropImg;
+}
+public void setCropImg(Binary cropImg) {
+	this.cropImg = cropImg;
 }
 
 

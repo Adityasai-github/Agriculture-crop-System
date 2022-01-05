@@ -1,7 +1,10 @@
 package com.example.cropapi.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.bson.BsonBinarySubType;
+import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.cropapi.services.*;
 import com.example.cropapi.model.Crop;
 import com.example.cropapi.model.GetAllCrops;
@@ -37,11 +43,29 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 		 }
 		
 		@PostMapping("/addcrops")
-		public void placeCrop(@RequestBody Crop crop) {
+		public void addCrops(
+				@RequestParam("cropid") String cropid,
+				@RequestParam("cropname") String cropname,
+				@RequestParam("cropquantity") String cropquantity,
+				@RequestParam("cropaddress") String cropaddress,
+				@RequestParam("cropImg") MultipartFile cropImg,
+				@RequestParam("croptype") String croptype,
+				@RequestParam("cropmincost") String cropmincost
+				 
+				) throws IOException 
+		{
+			Crop crop = new Crop();
+			crop.setCropid(cropid);
+			crop.setCropname(cropname);
+			crop.setCropquantity(cropquantity);
+			crop.setCropaddress(cropaddress);
+			crop.setCropImg(new Binary(BsonBinarySubType.BINARY, cropImg.getBytes()));
+			crop.setCroptype(croptype);
+			crop.setCropmincost(cropmincost);
+			 
 			cropService.placeCrop(crop);
 		}
 		
-		 
 		 
 		 @GetMapping("/crops/{cropname}")
 		  public List<Crop> findCrop ( @PathVariable String cropname) {

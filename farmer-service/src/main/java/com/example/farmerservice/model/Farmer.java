@@ -36,47 +36,57 @@ public Farmer() {
 public String getID() {
 	return ID;
 }
-public String getFname() {
+
+public void setID(String iD) {
+	ID = iD;
+}
+
+public String getFarmername() {
 	return farmername;
 }
-public void setFname(String fname) {
-	this.farmername = fname;
+
+public void setFarmername(String farmername) {
+	this.farmername = farmername;
 }
-public String getFpassword() {
+
+public String getFarmerpassword() {
 	return farmerpassword;
 }
-public void setFpassword(String fpassword) {
-	this.farmerpassword = fpassword;
+
+public void setFarmerpassword(String farmerpassword) {
+	this.farmerpassword = farmerpassword;
 }
-public String getFaccno() {
+
+public String getFarmeraccno() {
 	return farmeraccno;
 }
-public void setFaccno(String faccno) {
-	this.farmeraccno = faccno;
+
+public void setFarmeraccno(String farmeraccno) {
+	this.farmeraccno = farmeraccno;
 }
-public String getFemail() {
+
+public String getFarmeremail() {
 	return farmeremail;
 }
-public void setFemail(String femail) {
-	this.farmeremail = femail;
+
+public void setFarmeremail(String farmeremail) {
+	this.farmeremail = farmeremail;
 }
-public List<Integer> getAllRatings() {
-	return allRatings;
-}
-public void setAllRatings(List<Integer> allRatings) {
-	this.allRatings = allRatings;
-}
+
 public int getRating() {
 	return rating;
 }
+
 public void setRating(int rating) {
 	this.rating = rating;
 }
 
-public void setID(String iD) {
-	this.ID=iD;
-	
+public List<Integer> getAllRatings() {
+	return allRatings;
 }
 
+public void setAllRatings(List<Integer> allRatings) {
+	this.allRatings = allRatings;
+}
 
 }

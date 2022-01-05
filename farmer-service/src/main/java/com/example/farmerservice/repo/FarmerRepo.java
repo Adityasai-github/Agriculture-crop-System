@@ -14,6 +14,9 @@ public interface  FarmerRepo extends MongoRepository<Farmer, String> {
 
 	boolean existsById(String ID);
 
+	@Query("{'farmername' : ?0}") 
+	Farmer findFarmerByName(String farmername);
+
 	
 	
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
-
 import com.example.traderservice.model.*;
 import com.example.traderservice.repo.DealerRepo;
+import com.example.traderservice.service.DealerService;
 
 
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/trader")
 public class DealerController {
@@ -30,7 +31,15 @@ RestTemplate restTemplate;
 
 @Autowired
 GetAllCrops getAllCrops;
+@Autowired
+GetAllDealers getAllDealers;
+@Autowired
+DealerService dealerService;
 
+@PostMapping("/auth")
+private ResponseEntity<String> authdealer(@RequestBody Dealer dealer) {
+return dealerService.authDealer(dealer);
+}
 
  
     @PostMapping("/adddealers")
@@ -40,9 +49,10 @@ GetAllCrops getAllCrops;
     
 
       @GetMapping("/alldealers")
-      public List<Dealer> showAllDealers(){
-		   return repo1.findAll();
-		   }
+      public GetAllDealers showAllDealers() {
+  		getAllDealers.setDealerList(repo1.findAll());
+  		return getAllDealers;
+  	}
       
       @GetMapping("/dealer/{dealerid}")
       public Dealer findDealerById ( @PathVariable String dealerid) {
@@ -86,7 +96,7 @@ GetAllCrops getAllCrops;
  	      return ("Updated dealer name  Successfully");
  	  }
       
-      @PutMapping("/buycrop/{,cropid}")
+      @PutMapping("/buycrop/{cropid}")
       public String buycrop(@RequestBody Crop crop, @PathVariable String cropid) {
   	 
   	restTemplate.put("http://crop-api/crops/buycrop/"+cropid, crop);
